@@ -15,7 +15,6 @@ function App() {
   useEffect(() => {
 
     socket.on("allMessages", data => {
-      console.log(data)
       setMessages(data)
     })
 

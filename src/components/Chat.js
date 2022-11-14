@@ -5,11 +5,12 @@ function Chat({ socket, messages }) {
   const ref = useRef()
 
   useEffect(() => {
-    socket.emit('messageHistory')
+    socket.emit('history')
   }, [])
 
   const send = () => {
-    socket.emit('setMessages', ref.current.value)
+    socket.emit('setMessages', ref.current.value);
+    ref.current.value = ''
   }
 
   return (
