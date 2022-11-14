@@ -1,23 +1,30 @@
-import logo from './logo.svg';
+import { useEffect, useState } from 'react';
 import './App.css';
+import io from 'socket.io-client'
+import Chat from './components/Chat';
+import Username from './components/Username';
+
+const socket = io.connect('http://localhost:4001')
 
 function App() {
+
+  const [state, setState] = useState(false);
+  const [messages, setMessages] = useState([])
+
+
+  useEffect(() => {
+
+    socket.on("allMessages", data => {
+      console.log(data)
+      setMessages(data)
+    })
+
+  }, [])
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {state ? <Chat socket={socket} messages={messages} setMessages={setMessages} /> : <Username socket={socket} setState={setState} />}
+
     </div>
   );
 }
