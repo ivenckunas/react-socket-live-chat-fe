@@ -1,31 +1,63 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useState } from 'react';
+import ScrollToBottom from 'react-scroll-to-bottom'
 
-function Chat({ socket, messages }) {
+function Chat({ socket, username, room }) {
 
-  const ref = useRef()
+  const [currentMessage, setCurrentMessage] = useState('')
+  const [messageList, setMessageList] = useState([])
 
-  useEffect(() => {
-    socket.emit('history')
-  }, [])
-
-  const send = () => {
-    socket.emit('setMessages', ref.current.value);
-    ref.current.value = ''
+  const go = () => {
+    nav('/')
   }
 
-  return (
-    <div className='chat'>
-      <div className="chat-messages">
-        {messages.map((msg, i) => (
-          <p key={i}><b>{msg.username}</b>: {msg.message}</p>
-        )
-        )}
-      </div>
+  const sendMessage = async () => {
+    if (currentMessage !== '') {
+      const messageData = {
+        room,
+        author: username,
+        message: currentMessage,
+        time: new Date(Date.now()).getHours() + ":" + new Date(Date.now()).getMinutes()
+      };
+      await socket.emit('sendMessage', messageData);
+      setMessageList((list) => [...list, messageData])
+      setCurrentMessage('')
+    }
+  }
 
-      <div className="send-message">
-        <input ref={ref} type="text" placeholder='enter your message' />
-        <button onClick={send}>send</button>
+  useEffect(() => {
+    socket.on('receiveMessage', (data) => {
+      setMessageList((list) => [...list, data])
+    })
+  }, [socket])
+
+  return (
+    <div>
+      <div className="chat-header">
+        <p>Live chat</p>
+        <small>Room name: <b>{room}</b> </small>
       </div>
+      <ScrollToBottom className='chat-body'>
+        <div className='chat-messages' >
+          {messageList.map((msg, i) => (
+            <div
+              id={username === msg.author ? 'you' : 'other'}
+              className='chat-message'
+              key={i}>
+              <p><b>{msg.author}:</b> {msg.message}</p>
+              <small>{msg.time}</small>
+            </div>
+          ))}
+        </div>
+      </ScrollToBottom>
+      <div className="chat-footer">
+        <input
+          value={currentMessage}
+          onChange={(e) => { setCurrentMessage(e.target.value) }}
+          onKeyDown={(e) => { e.key === 'Enter' && sendMessage() }}
+          type="text" placeholder='enter your message...' />
+        <button onClick={sendMessage}>send</button>
+      </div>
+      <button onClick={go}>Home page</button>
     </div>
   )
 }

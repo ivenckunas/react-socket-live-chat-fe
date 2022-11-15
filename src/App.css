@@ -1,15 +1,134 @@
-.chat,
-.username {
-  margin: 2rem;
+@import url('https://fonts.googleapis.com/css2?family=Sono:wght@400;700&display=swap');
+
+/* .App {
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+} */
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 1rem;
+  font-family: 'Sono', sans-serif;
+}
+
+.join-chat {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.join-chat h3 {
+  font-size: 2rem;
+}
+
+.join-chat input {
+  padding: 0.5rem;
+  border: 2px solid rgb(51, 190, 190);
+  margin-bottom: 0.3rem;
+  border-radius: 8px;
+}
+
+.join-chat button {
+  padding: 0.7rem 0.2rem;
+  border: none;
+  background-color: rgb(216, 192, 55);
+  border-radius: 8px;
+  text-transform: uppercase;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.join-chat button:hover {
+  background-color: rgb(231, 209, 84);
+}
+
+
+.chat-header {
+  padding-bottom: 2rem;
+}
+
+.chat-header p {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0;
+}
+
+.chat-body {
+  height: 300px;
+  border: 2px solid rgb(51, 190, 190);
+  border-radius: 8px;
+  padding: 1rem;
 }
 
 .chat-messages {
-  height: 300px;
-  width: 600px;
-  border: 1px solid black;
-  overflow: scroll;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+#you {
+  margin-left: auto;
+  margin-right: 0;
+}
+
+#you p {
+  background-color: rgb(103, 214, 103);
+  padding: 0.7rem;
+  border-radius: 8px;
+}
+
+#other p {
+  padding: 0.7rem;
+  background-color: rgb(82, 164, 219);
+  border-radius: 8px;
+}
+
+.chat-message {
+  width: fit-content;
+  word-break: break-all;
+}
+
+.chat-message small {
+  font-size: 0.7rem;
+  color: grey;
+}
+
+.chat-message p {
+  background-color: rgb(110, 200, 223);
+  margin: 0;
+  margin-top: 0.5rem;
+}
+
+.chat-footer {
+  margin-left: auto;
+  margin-right: 0;
+}
+
+.chat-footer input {
+  padding: 1rem;
+  outline: none;
+  border: 1px solid slategrey;
+  border-radius: 8px;
+  margin: 0.2rem;
+  margin-left: 0;
+}
+
+.chat-footer button {
+  padding: 1rem 0.8rem;
+  border: none;
+  background-color: rgb(216, 192, 55);
+  border-radius: 8px;
+  text-transform: uppercase;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.chat-footer button:hover {
+  background-color: rgb(231, 209, 84);
 }
