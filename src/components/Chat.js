@@ -6,10 +6,6 @@ function Chat({ socket, username, room }) {
   const [currentMessage, setCurrentMessage] = useState('')
   const [messageList, setMessageList] = useState([])
 
-  const go = () => {
-    nav('/')
-  }
-
   const sendMessage = async () => {
     if (currentMessage !== '') {
       const messageData = {
@@ -35,6 +31,8 @@ function Chat({ socket, username, room }) {
       <div className="chat-header">
         <p>Live chat</p>
         <small>Room name: <b>{room}</b> </small>
+        <br />
+        <small>logged in as: <b>{username}</b></small>
       </div>
       <ScrollToBottom className='chat-body'>
         <div className='chat-messages' >
@@ -57,7 +55,6 @@ function Chat({ socket, username, room }) {
           type="text" placeholder='enter your message...' />
         <button onClick={sendMessage}>send</button>
       </div>
-      <button onClick={go}>Home page</button>
     </div>
   )
 }
